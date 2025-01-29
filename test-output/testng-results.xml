@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-01-28T18:18:08 IST" name="Default suite" finished-at="2025-01-28T18:18:46 IST" duration-ms="37400">
+  <suite started-at="2025-01-29T10:10:31 IST" name="Suite" finished-at="2025-01-29T10:11:13 IST" duration-ms="41639">
     <groups>
     </groups>
-    <test started-at="2025-01-28T18:18:08 IST" name="Default test" finished-at="2025-01-28T18:18:46 IST" duration-ms="37400">
-      <class name="com.qa.pages.FindACenterPage">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.qa.pages.FindACenterPage@4802796d]" started-at="2025-01-28T18:18:08 IST" name="setUp" finished-at="2025-01-28T18:18:20 IST" duration-ms="11461" status="PASS">
+    <test started-at="2025-01-29T10:10:31 IST" name="Test" finished-at="2025-01-29T10:11:13 IST" duration-ms="41639">
+      <class name="com.qa.tests.SearchTest">
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.qa.tests.SearchTest@54d9d12d]" started-at="2025-01-29T10:11:03 IST" name="setup" finished-at="2025-01-29T10:11:10 IST" duration-ms="7327" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method signature="findCenterTest()[pri:0, instance:com.qa.pages.FindACenterPage@4802796d]" started-at="2025-01-28T18:18:20 IST" name="findCenterTest" finished-at="2025-01-28T18:18:45 IST" duration-ms="25462" status="PASS">
+        </test-method> <!-- setup -->
+        <test-method signature="testSearchFunctionality()[pri:0, instance:com.qa.tests.SearchTest@54d9d12d]" started-at="2025-01-29T10:11:10 IST" name="testSearchFunctionality" finished-at="2025-01-29T10:11:12 IST" duration-ms="1876" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- findCenterTest -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.qa.pages.FindACenterPage@4802796d]" started-at="2025-01-28T18:18:45 IST" name="tearDown" finished-at="2025-01-28T18:18:46 IST" duration-ms="417" status="PASS">
+        </test-method> <!-- testSearchFunctionality -->
+        <test-method is-config="true" signature="teardown()[pri:0, instance:com.qa.tests.SearchTest@54d9d12d]" started-at="2025-01-29T10:11:12 IST" name="teardown" finished-at="2025-01-29T10:11:13 IST" duration-ms="413" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- tearDown -->
-      </class> <!-- com.qa.pages.FindACenterPage -->
-    </test> <!-- Default test -->
-  </suite> <!-- Default suite -->
+        </test-method> <!-- teardown -->
+      </class> <!-- com.qa.tests.SearchTest -->
+      <class name="com.qa.tests.FindACenterTest">
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.qa.tests.FindACenterTest@3c46e67a]" started-at="2025-01-29T10:10:31 IST" name="setup" finished-at="2025-01-29T10:10:37 IST" duration-ms="6277" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="verifyFindCenterFunctionality()[pri:0, instance:com.qa.tests.FindACenterTest@3c46e67a]" started-at="2025-01-29T10:10:37 IST" name="verifyFindCenterFunctionality" finished-at="2025-01-29T10:11:03 IST" duration-ms="25246" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyFindCenterFunctionality -->
+        <test-method is-config="true" signature="teardown()[pri:0, instance:com.qa.tests.FindACenterTest@3c46e67a]" started-at="2025-01-29T10:11:03 IST" name="teardown" finished-at="2025-01-29T10:11:03 IST" duration-ms="435" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- teardown -->
+      </class> <!-- com.qa.tests.FindACenterTest -->
+    </test> <!-- Test -->
+  </suite> <!-- Suite -->
 </testng-results>

@@ -8,104 +8,76 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class FindACenterPage {
+    private WebDriver driver;
+    private WebDriverWait wait;
 
-    WebDriver driver;
-    WebDriverWait wait;
+    // **Locators**
+    private By findCenterLink = By.xpath("(//a[@href='https://www.brighthorizons.com/child-care-locator'])[4]");
+    private By searchBox = By.id("addressInput");
+    private By resultsList = By.xpath("//div[@class='centerDetails results']");
+    private By centerResults = By.xpath("//div[@class='centerResult infoWindow track_center_select covidOpen']");
+    private By firstCenter = By.xpath("(//div[@class='heading-section'])[1]");
+    private By centerPopup = By.xpath("//div[@class='centerResult infoWindow track_center_select covidOpen active']");
+    private By centerNamePopup = By.xpath("(//h3[contains(@class, 'centerResult__name')])[1]");
+    private By addressPopup = By.xpath("(//span[contains(@class, 'centerResult__address')])[1]");
+    private By mapTooltipPopup = By.xpath("//div[@class='mapTooltip']");
+    private By centerNameMapTooltip = By.xpath("//span[@class='mapTooltip__headline']");
+    private By addressMapTooltip = By.xpath("//div[@class='mapTooltip__address']");
 
-    @BeforeMethod
-    public void setUp() {
-        WebDriverManager.chromedriver().create();
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        // Step 1: Navigate to the BH home page and maximize window
-        driver.get("https://www.brighthorizons.com/");
-        driver.manage().window().maximize();
-
-        // Accept cookies if the prompt is displayed
-        driver.findElement(By.xpath("//button[@id='onetrust-accept-btn-handler']")).click();
+    // **Constructor**
+    public FindACenterPage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    @Test
-    public void findCenterTest() throws InterruptedException {
-        // Step 2: Click on "Find a Center" option
-        WebElement findCenterLink = driver.findElement(By.xpath("(//a[@href=\"https://www.brighthorizons.com/child-care-locator\"])[4]"));
-        findCenterLink.click();
-
-        // Step 3: Verify that the newly opened page contains '/child-care-locator' in the URL
+    // **Methods**
+    public void clickFindACenter() {
+        driver.findElement(findCenterLink).click();
         wait.until(ExpectedConditions.urlContains("/child-care-locator"));
-        String currentUrl = driver.getCurrentUrl();
-        if (currentUrl.contains("/child-care-locator")) {
-            System.out.println("URL contains '/child-care-locator': Passed");
-        } else {
-            System.out.println("URL does not contain '/child-care-locator': Failed");
-        }
-
-        // Step 4: Type 'New York' into the search box and press Enter
-        WebElement searchBox = driver.findElement(By.xpath("//input[@id='addressInput']"));
-        searchBox.sendKeys("New York");
-        Thread.sleep(2000); // Wait for suggestions (replace with explicit wait if needed)
-        searchBox.sendKeys(Keys.RETURN); // Press Enter
-
-        // Step 5: Verify if the number of found centers matches the displayed list count
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='centerDetails results']")));
-        WebElement resultsList = driver.findElement(By.xpath("//div[@class='centerDetails results']"));
-
-        int numberOfCentersDisplayed = resultsList.findElements(By.xpath("//div[@class='centerResult infoWindow track_center_select covidOpen']")).size();
-        int expectedNumberOfCenters = 20; // Replace this with dynamic count if available
-        if (numberOfCentersDisplayed == expectedNumberOfCenters) {
-            System.out.println("Number of centers displayed matches the expected number: Passed");
-        } else {
-            System.out.println("Number of centers displayed does not match the expected number: Failed");
-        }
-
-        // Step 6: Click on the first center in the list
-        WebElement firstCenter = resultsList.findElements(By.xpath("(//div[@class='heading-section'])[1]")).get(0);
-        firstCenter.click();
-
-        // Step 7: Verify that the center name and address in the popup match those in the list
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='centerResult infoWindow track_center_select covidOpen active']")));
-        WebElement popup = driver.findElement(By.xpath("//div[@class='centerResult infoWindow track_center_select covidOpen active']"));
-        String centerNameInPopup = popup.findElement(By.xpath("(//h3[contains(@class, 'centerResult__name')])[1]")).getText();
-        String addressInPopup = popup.findElement(By.xpath("(//span[contains(@class, 'centerResult__address')])[1]")).getText();
-
-        System.out.println("Listing name text: " + centerNameInPopup);
-        System.out.println("Listing adress text: " + addressInPopup);
-
-        // Popup text
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='mapTooltip']")));
-        WebElement mapTooltipPopup = driver.findElement(By.xpath("//div[@class='mapTooltip']"));
-        String centerNameInMapTooltip = mapTooltipPopup.findElement(By.xpath("//span[@class=\"mapTooltip__headline\"]")).getText();
-        String addressInMapTooltip = mapTooltipPopup.findElement(By.xpath("//div[@class=\"mapTooltip__address\"]")).getText().trim().replaceAll("\\s+", " ");
-
-        System.out.println("Center name in popup: " + centerNameInMapTooltip);
-        System.out.println("Center name in popup: " + addressInMapTooltip);
-
-        if (centerNameInPopup.equals(centerNameInMapTooltip) && addressInPopup.equals(addressInMapTooltip)) {
-            System.out.println("Center name and address in popup match the list: Passed");
-        } else {
-            System.out.println("Center name and/or address in popup do not match the list: Failed");
-        }
     }
 
-    @AfterMethod
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+    public boolean verifyPageURL() {
+        return driver.getCurrentUrl().contains("/child-care-locator");
+    }
+
+    public void searchLocation(String location) throws InterruptedException {
+        WebElement searchField = driver.findElement(searchBox);
+        searchField.clear();  
+        searchField.sendKeys(location);
+        Thread.sleep(2000);
+        searchField.sendKeys(Keys.RETURN);
+        
+        wait.until(ExpectedConditions.presenceOfElementLocated(resultsList));
+    }
+
+    public int getNumberOfCentersDisplayed() {
+        List<WebElement> centers = driver.findElements(centerResults);
+        return centers.size();
+    }
+
+    public void clickFirstCenter() {
+        driver.findElement(firstCenter).click();
+    }
+
+    public String getCenterNameInPopup() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(centerPopup));
+        return driver.findElement(centerNamePopup).getText();
+    }
+
+    public String getAddressInPopup() {
+        return driver.findElement(addressPopup).getText();
+    }
+
+    public String getCenterNameInMapTooltip() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(mapTooltipPopup));
+        return driver.findElement(centerNameMapTooltip).getText();
+    }
+
+    public String getAddressInMapTooltip() {
+        return driver.findElement(addressMapTooltip).getText().trim().replaceAll("\\s+", " ");
     }
 }
-
-	
-
-
